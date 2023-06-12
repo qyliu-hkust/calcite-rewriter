@@ -16,6 +16,7 @@ import org.apache.calcite.sql.parser.SqlParser;
 import org.apache.calcite.sql.validate.SqlConformanceEnum;
 import org.apache.calcite.tools.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -92,5 +93,18 @@ public class QueryRewriter {
                 .asStatement()
                 .toSqlString(this.sqlDialect)
                 .getSql();
+    }
+
+    public List<RelOptRule> getRules(String ruleClass) {
+        assert this.ruleMap.containsKey(ruleClass);
+        return this.ruleMap.get(ruleClass);
+    }
+
+    public List<RelOptRule> getAllRules() {
+        List<RelOptRule> rules = new ArrayList<>();
+        for (String key : this.ruleMap.keySet()) {
+            rules.addAll(this.ruleMap.get(key));
+        }
+        return rules;
     }
 }

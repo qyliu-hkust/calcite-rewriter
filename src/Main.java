@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         String writePath = "./q1_rewrite.json";
         SchemaPlus tpchSchema = BuildinSchema.getTpchSchema();
         List<List<String>> ruleClasses = Utils.enumRandomRuleClasses(10);
