@@ -56,13 +56,22 @@ public class QueryRewriter {
         hepProgramBuilder.addMatchOrder(HepMatchOrder.TOP_DOWN);
         this.hepPlanner = new HepPlanner(hepProgramBuilder.build());
 
-        SqlParser.Config parserConfig = SqlParser.config().withLex(Lex.MYSQL).withUnquotedCasing(UNCHANGED).withCaseSensitive(false).withQuoting(DOUBLE_QUOTE).withConformance(SqlConformanceEnum.MYSQL_5);
-        FrameworkConfig config = Frameworks.newConfigBuilder().parserConfig(parserConfig).defaultSchema(schema).build();
+        SqlParser.Config parserConfig = SqlParser.config()
+                .withLex(Lex.MYSQL)
+                .withUnquotedCasing(UNCHANGED)
+                .withCaseSensitive(false)
+                .withQuoting(DOUBLE_QUOTE)
+                .withConformance(SqlConformanceEnum.MYSQL_5);
+        FrameworkConfig config = Frameworks.newConfigBuilder()
+                .parserConfig(parserConfig)
+                .defaultSchema(schema)
+                .build();
         this.planner = Frameworks.getPlanner(config);
     }
 
     public RelNode sqlToRelNode(String sql) throws SqlParseException, ValidationException, RelConversionException {
-        sql = sql.replaceAll(";", "").replaceAll("\n", " ");
+        sql = sql.replaceAll(";", "")
+                 .replaceAll("\n", " ");
 
         this.planner.close();
         this.planner.reset();

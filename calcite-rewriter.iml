@@ -10,5 +10,6 @@
     <orderEntry type="library" name="apache.calcite.core" level="project" />
     <orderEntry type="library" name="apache.logging.log4j.core" level="project" />
     <orderEntry type="library" name="apache.logging.log4j.slf4j.impl" level="project" />
+    <orderEntry type="library" name="apache.calcite.server" level="project" />
   </component>
 </module>

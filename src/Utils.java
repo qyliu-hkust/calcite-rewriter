@@ -6,9 +6,7 @@ import org.apache.calcite.sql.SqlExplainLevel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Utils {
     public static List<String> getRuleClassesInRandomOrder() {
@@ -30,6 +28,21 @@ public class Utils {
         List<String> allRuleClasses = new ArrayList<>(
                 List.of("rule_agg", "rule_filter", "rule_join", "rule_project", "rule_cal", "rule_orderby", "rule_union"));
         return permute(allRuleClasses);
+    }
+
+    public static List<String> getRuleClassesByRandomChosen() {
+        List<String> ruleClasses = getRuleClassesInRandomOrder();
+        Random random = new Random();
+        int index = random.nextInt(0, ruleClasses.size());
+        return ruleClasses.subList(0, index);
+    }
+
+    public static List<List<String>> enumRuleClassesByRandomChosen(int n) {
+        List<List<String>> res = new ArrayList<>(n);
+        for (int i=0; i<n; ++i) {
+            res.add(getRuleClassesByRandomChosen());
+        }
+        return res;
     }
 
     private static  <E> List<List<E>> permute(List<E> original) {
@@ -64,6 +77,8 @@ public class Utils {
         json.put("raw_query", sql);
 
         JSONArray rewrites = new JSONArray();
+        Set<String> rewriteSet = new HashSet<>();
+
         try {
             for (List<String> ruleClass : ruleClasses) {
                 long start = System.nanoTime();
@@ -71,18 +86,23 @@ public class Utils {
                 String rewrite = rewriter.rewrite(sql);
                 long end = System.nanoTime();
 
-                JSONObject rewriteJSON = new JSONObject();
-                rewriteJSON.put("rule_order", ruleClass.toString());
-                rewriteJSON.put("rewrite_time", (end - start) / 1e6);
-                rewriteJSON.put("rewrite_query", rewrite);
+                if (!rewriteSet.contains(rewrite)) {
+                    rewriteSet.add(rewrite);
 
-                rewrites.add(rewriteJSON);
+                    JSONObject rewriteJSON = new JSONObject();
+                    rewriteJSON.put("rule_order", ruleClass.toString());
+                    rewriteJSON.put("rewrite_time", (end - start) / 1e6);
+                    rewriteJSON.put("rewrite_query", rewrite);
+
+                    rewrites.add(rewriteJSON);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         json.put("rewrites", rewrites);
+        json.put("num_rewrites", rewrites.size());
         return json;
     }
 }
