@@ -2,19 +2,12 @@ package schema;
 
 import org.apache.calcite.config.Lex;
 import org.apache.calcite.schema.SchemaPlus;
-import org.apache.calcite.server.DdlExecutorImpl;
 import org.apache.calcite.sql.*;
-import org.apache.calcite.sql.ddl.SqlDdlNodes;
-import org.apache.calcite.sql.parser.SqlAbstractParserImpl;
 import org.apache.calcite.sql.parser.SqlParseException;
 import org.apache.calcite.sql.parser.SqlParser;
-import org.apache.calcite.sql.parser.SqlParserImplFactory;
 import org.apache.calcite.sql.parser.ddl.SqlDdlParserImpl;
-import org.apache.calcite.sql.parser.impl.SqlParserImpl;
 import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.sql.util.SqlBasicVisitor;
-import org.apache.calcite.sql.util.SqlVisitor;
-import org.apache.calcite.sql.validate.SqlConformanceEnum;
 import org.apache.calcite.tools.Frameworks;
 import org.apache.calcite.util.Pair;
 
@@ -154,105 +147,105 @@ public class BuildinSchema {
 
         SimpleTable badges = SimpleTable.newTable("badges",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("UserId", SqlTypeName.INTEGER),
-                        Pair.of("Name", SqlTypeName.VARCHAR),
-                        Pair.of("Date", SqlTypeName.DATE)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("userid", SqlTypeName.INTEGER),
+                        Pair.of("name", SqlTypeName.VARCHAR),
+                        Pair.of("date", SqlTypeName.DATE)
                 )
         );
         SimpleTable comments = SimpleTable.newTable("comments",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("PostId", SqlTypeName.INTEGER),
-                        Pair.of("Score", SqlTypeName.INTEGER),
-                        Pair.of("Text", SqlTypeName.VARCHAR),
-                        Pair.of("CreationDate", SqlTypeName.INTEGER),
-                        Pair.of("UserId", SqlTypeName.INTEGER),
-                        Pair.of("UserDisplayName", SqlTypeName.INTEGER)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("postid", SqlTypeName.INTEGER),
+                        Pair.of("score", SqlTypeName.INTEGER),
+                        Pair.of("text", SqlTypeName.VARCHAR),
+                        Pair.of("creationdate", SqlTypeName.INTEGER),
+                        Pair.of("userid", SqlTypeName.INTEGER),
+                        Pair.of("userdisplayname", SqlTypeName.INTEGER)
                 )
         );
         SimpleTable postHistory = SimpleTable.newTable("postHistory",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("PostHistoryTypeId", SqlTypeName.INTEGER),
-                        Pair.of("PostId", SqlTypeName.INTEGER),
-                        Pair.of("RevisionGUID", SqlTypeName.VARCHAR),
-                        Pair.of("CreationDate", SqlTypeName.DATE),
-                        Pair.of("UserId", SqlTypeName.INTEGER),
-                        Pair.of("Text", SqlTypeName.VARCHAR),
-                        Pair.of("Comment", SqlTypeName.VARCHAR),
-                        Pair.of("UserDisplayName", SqlTypeName.VARCHAR)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("posthistorytypeid", SqlTypeName.INTEGER),
+                        Pair.of("postid", SqlTypeName.INTEGER),
+                        Pair.of("revisionguid", SqlTypeName.VARCHAR),
+                        Pair.of("creationdate", SqlTypeName.DATE),
+                        Pair.of("userid", SqlTypeName.INTEGER),
+                        Pair.of("text", SqlTypeName.VARCHAR),
+                        Pair.of("comment", SqlTypeName.VARCHAR),
+                        Pair.of("userdisplayname", SqlTypeName.VARCHAR)
                 )
         );
         SimpleTable postLinks = SimpleTable.newTable("postLinks",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("CreationDate", SqlTypeName.DATE),
-                        Pair.of("PostId", SqlTypeName.INTEGER),
-                        Pair.of("RelatedPostId", SqlTypeName.INTEGER),
-                        Pair.of("LinkTypeId", SqlTypeName.INTEGER)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("creationdate", SqlTypeName.DATE),
+                        Pair.of("postid", SqlTypeName.INTEGER),
+                        Pair.of("relatedpostid", SqlTypeName.INTEGER),
+                        Pair.of("linktypeid", SqlTypeName.INTEGER)
                 )
         );
         SimpleTable posts = SimpleTable.newTable("posts",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("PostTypeId", SqlTypeName.INTEGER),
-                        Pair.of("AcceptedAnswerId", SqlTypeName.INTEGER),
-                        Pair.of("CreationDate", SqlTypeName.DATE),
-                        Pair.of("Score", SqlTypeName.INTEGER),
-                        Pair.of("ViewCount", SqlTypeName.INTEGER),
-                        Pair.of("Body", SqlTypeName.VARCHAR),
-                        Pair.of("OwnerUserId", SqlTypeName.INTEGER),
-                        Pair.of("LasActivityDate", SqlTypeName.DATE),
-                        Pair.of("Title", SqlTypeName.VARCHAR),
-                        Pair.of("Tags", SqlTypeName.VARCHAR),
-                        Pair.of("AnswerCount", SqlTypeName.INTEGER),
-                        Pair.of("CommentCount", SqlTypeName.INTEGER),
-                        Pair.of("FavoriteCount", SqlTypeName.INTEGER),
-                        Pair.of("LastEditorUserId", SqlTypeName.INTEGER),
-                        Pair.of("LastEditDate", SqlTypeName.DATE),
-                        Pair.of("CommunityOwnedDate", SqlTypeName.DATE),
-                        Pair.of("ParentId", SqlTypeName.INTEGER),
-                        Pair.of("ClosedDate", SqlTypeName.DATE),
-                        Pair.of("OwnerDisplayName", SqlTypeName.VARCHAR),
-                        Pair.of("LastEditorDisplayName", SqlTypeName.VARCHAR)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("posttypeid", SqlTypeName.INTEGER),
+                        Pair.of("acceptedanswerid", SqlTypeName.INTEGER),
+                        Pair.of("creationdate", SqlTypeName.DATE),
+                        Pair.of("score", SqlTypeName.INTEGER),
+                        Pair.of("viewcount", SqlTypeName.INTEGER),
+                        Pair.of("body", SqlTypeName.VARCHAR),
+                        Pair.of("owneruserid", SqlTypeName.INTEGER),
+                        Pair.of("Lastactivitydate", SqlTypeName.DATE),
+                        Pair.of("title", SqlTypeName.VARCHAR),
+                        Pair.of("tags", SqlTypeName.VARCHAR),
+                        Pair.of("answercount", SqlTypeName.INTEGER),
+                        Pair.of("commentcount", SqlTypeName.INTEGER),
+                        Pair.of("favoritecount", SqlTypeName.INTEGER),
+                        Pair.of("lasteditoruserid", SqlTypeName.INTEGER),
+                        Pair.of("lasteditdate", SqlTypeName.DATE),
+                        Pair.of("communityowneddate", SqlTypeName.DATE),
+                        Pair.of("parentid", SqlTypeName.INTEGER),
+                        Pair.of("closeddate", SqlTypeName.DATE),
+                        Pair.of("ownerdisplayname", SqlTypeName.VARCHAR),
+                        Pair.of("lasteditordisplayname", SqlTypeName.VARCHAR)
                 )
         );
         SimpleTable tags = SimpleTable.newTable("tags",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("TagName", SqlTypeName.VARCHAR),
-                        Pair.of("Count", SqlTypeName.INTEGER),
-                        Pair.of("ExcerptPostId", SqlTypeName.INTEGER),
-                        Pair.of("WikiPostId", SqlTypeName.INTEGER)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("tagname", SqlTypeName.VARCHAR),
+                        Pair.of("count", SqlTypeName.INTEGER),
+                        Pair.of("excerptpostid", SqlTypeName.INTEGER),
+                        Pair.of("wikipostid", SqlTypeName.INTEGER)
                 )
         );
         SimpleTable users = SimpleTable.newTable("users",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("Reputation", SqlTypeName.INTEGER),
-                        Pair.of("CreationDate", SqlTypeName.DATE),
-                        Pair.of("DisplayName", SqlTypeName.VARCHAR),
-                        Pair.of("LastAccessDate", SqlTypeName.DATE),
-                        Pair.of("WebsiteUrl", SqlTypeName.VARCHAR),
-                        Pair.of("Location", SqlTypeName.VARCHAR),
-                        Pair.of("AboutMe", SqlTypeName.VARCHAR),
-                        Pair.of("Views", SqlTypeName.INTEGER),
-                        Pair.of("UpVotes", SqlTypeName.INTEGER),
-                        Pair.of("DownVotes", SqlTypeName.INTEGER),
-                        Pair.of("AccountId", SqlTypeName.INTEGER),
-                        Pair.of("Age", SqlTypeName.INTEGER),
-                        Pair.of("ProfileImageUrl", SqlTypeName.VARCHAR)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("reputation", SqlTypeName.INTEGER),
+                        Pair.of("creationdate", SqlTypeName.DATE),
+                        Pair.of("displayname", SqlTypeName.VARCHAR),
+                        Pair.of("lastaccessdate", SqlTypeName.DATE),
+                        Pair.of("websiteurl", SqlTypeName.VARCHAR),
+                        Pair.of("location", SqlTypeName.VARCHAR),
+                        Pair.of("aboutme", SqlTypeName.VARCHAR),
+                        Pair.of("views", SqlTypeName.INTEGER),
+                        Pair.of("upvotes", SqlTypeName.INTEGER),
+                        Pair.of("downvotes", SqlTypeName.INTEGER),
+                        Pair.of("accountid", SqlTypeName.INTEGER),
+                        Pair.of("age", SqlTypeName.INTEGER),
+                        Pair.of("profileimageurl", SqlTypeName.VARCHAR)
                 )
         );
         SimpleTable votes = SimpleTable.newTable("votes",
                 List.of(
-                        Pair.of("Id", SqlTypeName.INTEGER),
-                        Pair.of("PostId", SqlTypeName.INTEGER),
-                        Pair.of("VoteTypeId", SqlTypeName.INTEGER),
-                        Pair.of("CreationDate", SqlTypeName.DATE),
-                        Pair.of("UserId", SqlTypeName.INTEGER),
-                        Pair.of("BountyAmount", SqlTypeName.INTEGER)
+                        Pair.of("id", SqlTypeName.INTEGER),
+                        Pair.of("postid", SqlTypeName.INTEGER),
+                        Pair.of("votetypeid", SqlTypeName.INTEGER),
+                        Pair.of("creationdate", SqlTypeName.DATE),
+                        Pair.of("userid", SqlTypeName.INTEGER),
+                        Pair.of("bountyamount", SqlTypeName.INTEGER)
                 )
         );
 

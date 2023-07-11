@@ -29,7 +29,6 @@ public class QueryRewriter {
     private final Planner planner;
     private final SqlDialect sqlDialect = PostgresqlSqlDialect.DEFAULT;
 
-
     private final Map<String, List<RelOptRule>> ruleMap = Map.of(
             "rule_agg", List.of(CoreRules.AGGREGATE_EXPAND_DISTINCT_AGGREGATES,CoreRules.AGGREGATE_EXPAND_DISTINCT_AGGREGATES_TO_JOIN,CoreRules.AGGREGATE_JOIN_TRANSPOSE_EXTENDED,CoreRules.AGGREGATE_PROJECT_MERGE,CoreRules.AGGREGATE_ANY_PULL_UP_CONSTANTS,CoreRules.AGGREGATE_UNION_AGGREGATE,CoreRules.AGGREGATE_UNION_TRANSPOSE,CoreRules.AGGREGATE_VALUES, PruneEmptyRules.AGGREGATE_INSTANCE),
             "rule_filter", List.of(CoreRules.FILTER_AGGREGATE_TRANSPOSE,CoreRules.FILTER_CORRELATE,CoreRules.FILTER_INTO_JOIN,CoreRules.JOIN_CONDITION_PUSH,CoreRules.FILTER_MERGE,CoreRules.FILTER_MULTI_JOIN_MERGE, CoreRules.FILTER_PROJECT_TRANSPOSE,CoreRules.FILTER_SET_OP_TRANSPOSE,CoreRules.FILTER_TABLE_FUNCTION_TRANSPOSE,CoreRules.FILTER_SCAN,CoreRules.FILTER_REDUCE_EXPRESSIONS,CoreRules.PROJECT_REDUCE_EXPRESSIONS,PruneEmptyRules.FILTER_INSTANCE),
@@ -69,22 +68,27 @@ public class QueryRewriter {
         this.planner = Frameworks.getPlanner(config);
     }
 
-    public RelNode sqlToRelNode(String sql) throws SqlParseException, ValidationException, RelConversionException {
-        sql = sql.replaceAll(";", "")
-                 .replaceAll("\n", " ");
-
+    public SqlNode parseSql(String sql) throws SqlParseException, ValidationException {
         this.planner.close();
         this.planner.reset();
+
+        sql = sql.replaceAll(";", "")
+                .replaceAll("\n", " ");
 
         SqlNode sqlNode = this.planner.parse(sql);
         sqlNode = this.planner.validate(sqlNode);
 
+        return sqlNode;
+    }
+
+    public RelNode sqlToRelNode(String sql) throws SqlParseException, ValidationException, RelConversionException {
+        SqlNode sqlNode = parseSql(sql);
         return this.planner.rel(sqlNode).project();
     }
 
     public RelNode applyRules(RelNode logicalPlan) {
         RelNode finalNode = logicalPlan;
-        for (int i = 0;i < 5;i++){
+        for (int i = 0; i < 3; i++){
             this.hepPlanner.setRoot(finalNode);
             finalNode = this.hepPlanner.findBestExp();
         }

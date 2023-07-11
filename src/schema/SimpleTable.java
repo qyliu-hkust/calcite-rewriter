@@ -8,7 +8,6 @@ import org.apache.calcite.schema.impl.AbstractTable;
 import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.util.Pair;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
