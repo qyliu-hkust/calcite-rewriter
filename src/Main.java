@@ -72,7 +72,7 @@ public class Main {
 
     public static void main(String[] args) throws ValidationException, SqlParseException, RelConversionException {
         Map<String, List<String>> queryMap = loadJSON("./stats_rewrite.json");
-        QueryRunner queryRunner = new QueryRunner("stats", "public", "postgres", "Liuqiyu1995");
+        QueryRunner queryRunner = new QueryRunner("stats", "public", "postgres", "********");
         try {
             queryRunner.connect();
         } catch (SQLException e) {
